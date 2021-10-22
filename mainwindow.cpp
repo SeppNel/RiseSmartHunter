@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #include <vector>
-#include <Windows.h>
+#include <windows.h>
 #include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -97,7 +97,7 @@ void MainWindow::get_hp()
     int i = 0;
     while (true)
     {
-        float* monsterHP = ReadMultiLevelPointerSafe<float>(hProcess, (void*)0x14BEF7738, { 0x80, 0x40, 0x290, 0x48, 0x40, 0x70});
+        float* monsterHP = ReadMultiLevelPointerSafe<float>(hProcess, (void*)0x14BEF7738, { 0x80, 0x40, 0x290, 0x48, 0x40, 0x40, 0x10});
         ReadProcessMemory(hProcess, (void*)monsterHP, &monsterHPval, sizeof(monsterHPval), 0);
 
         ui->main_label->setText(QString("Vida: %1").arg(int(monsterHPval + 0.5)));
@@ -106,6 +106,37 @@ void MainWindow::get_hp()
         i++;
 
         Sleep(20);
+    }
+
+}
+
+
+void fly_mode()
+{
+    HWND window;
+    do
+    {
+        window = FindWindowA(NULL, "MonsterHunterRise Demo");
+        Sleep(100);
+    } while (window == NULL);
+
+    DWORD pid;
+    GetWindowThreadProcessId(window, &pid);
+
+    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+
+    float val = 0;
+    while (true)
+    {
+        float* wirebug = ReadMultiLevelPointerSafe<float>(hProcess, (void*)0x14BEF63E8, { 0x60, 0x20, 0x3B0, 0x28, 0x10});
+        ReadProcessMemory(hProcess, (void*)wirebug, &val, sizeof(val), 0);
+
+        if(val > 0){
+            val = 0;
+            WriteProcessMemory(hProcess, (void*)wirebug, &val, sizeof(val), 0);
+        }
+
+        Sleep(16);
     }
 
 }
