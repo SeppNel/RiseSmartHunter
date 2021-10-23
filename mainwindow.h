@@ -20,8 +20,8 @@ public:
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-    int m_nMouseClick_X_Coordinate;
-    int m_nMouseClick_Y_Coordinate;
+    int m_nMouseClick_X_Coordinate = 0;
+    int m_nMouseClick_Y_Coordinate = 0;
     void get_damage();
     void get_hp();
 

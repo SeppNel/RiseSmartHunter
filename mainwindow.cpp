@@ -17,6 +17,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+// This 2 functions to drag the windows without bar
+
 void MainWindow::mousePressEvent(QMouseEvent *event) {
     m_nMouseClick_X_Coordinate = event->x();
     m_nMouseClick_Y_Coordinate = event->y();
@@ -27,6 +30,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
 }
 
 
+// Function to read pointers (https://github.com/Ezekial711/MonsterHunterWorldModding/wiki/Making-a-persistent-loop-plugin)
 
 template<class T>
 T* ReadMultiLevelPointerSafe(HANDLE process_handle, void* base_address, const std::vector<uintptr_t>& offsets)

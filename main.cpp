@@ -3,19 +3,32 @@
 #include <QThread>
 #include <QScreen>
 #include <QSettings>
+#include <QFile>
+//#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QSize screenSize = a.primaryScreen()->size();
 
+    // Create config file if not present
+
+    if (!QFile("config.ini").exists()) {
+        QSettings settings("config.ini", QSettings::IniFormat);
+        settings.setValue("multipleWindows", 0);
+        settings.setValue("fontColor", "red");
+        settings.setValue("fontSize", 20);
+        settings.setValue("flyMode", 0);
+    }
+
+    // Read config file
+
     QSettings settings("config.ini", QSettings::IniFormat);
-    //settings.setValue("multipleWindows", 0);
     int multiWindows = settings.value("multipleWindows").toInt();
     QString fontColor = settings.value("fontColor").toString();
     QString fontSize = settings.value("fontSize").toString();
     int flyMode = settings.value("flyMode").toInt();
-    //settings.sync();
+
 
 
 // Damage Window
@@ -54,7 +67,8 @@ int main(int argc, char *argv[])
 
     hpDisp.show();
 
-//
+// Fly Mode
+
     if (flyMode){
         QThread *thread3 = QThread::create([]{
                 fly_mode();
