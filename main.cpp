@@ -37,9 +37,10 @@ int main(int argc, char *argv[])
 
     damageDisp.setAttribute(Qt::WA_TranslucentBackground);
     damageDisp.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    damageDisp.move(0, (screenSize.height() - damageDisp.height()) / 2);
+    damageDisp.move(5, (screenSize.height() - damageDisp.height()) / 2);
+    damageDisp.resize(150, damageDisp.height());
 
-    QString style = "QLabel { color: " + fontColor + "; font-size: " + fontSize + "pt; }";
+    QString style = "QLabel { color: " + fontColor + "; font-size: " + fontSize + "pt; font-weight: bold }";
     damageDisp.setStyleSheet(style);
 
     QThread *thread = QThread::create([&damageDisp]{
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
     }
     hpDisp.setAttribute(Qt::WA_TranslucentBackground);
     hpDisp.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    hpDisp.move((screenSize.width() - hpDisp.width()) / 2, 0);
+    hpDisp.move((screenSize.width() - hpDisp.width()) / 2, 5);
 
     QThread *thread2 = QThread::create([&hpDisp]{
             hpDisp.get_hp();

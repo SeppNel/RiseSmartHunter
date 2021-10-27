@@ -25,6 +25,11 @@ public:
     void get_damage();
     void get_hp();
 
+public slots:
+    void updateUI(QString, QString);
+
+signals:
+    void uiSignal(QString, QString);
 
 private:
     Ui::MainWindow *ui;
