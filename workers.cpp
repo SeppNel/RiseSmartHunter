@@ -62,7 +62,6 @@ void Workers::get_hp()
 {
     HANDLE hProcess = find_window();
 
-    //ui->main_label->setText("Listo");
     QString style = "background-color: rgba(140, 140, 140, 0.6);";
     emit uiSignal("Listo", style);
 
@@ -79,8 +78,6 @@ void Workers::get_hp()
         if (read_success) {
             memcpy(&monsterHPval, &buffer, 4);
             memcpy(&maxHP, &buffer[4], 4);
-
-            //qDebug() << monsterHPval << " - " << maxHP;
 
             QString text = QString("%1 / %2").arg(int(monsterHPval + 0.5)).arg(int(maxHP + 0.5));
 
@@ -107,10 +104,6 @@ void fly_mode()
     float val = 0;
     while (true)
     {
-        //Read monster HP at start to block execution if not in a hunt, because otherwise this function can read a pointer mid change in the menu and softlock itself, heh.
-        //Not really needed if using the non safe version.
-        //ReadMultiLevelPointerSafe<float>(hProcess, (void*)0x14BEF7738, { 0x80, 0x40, 0x290, 0x48, 0x40, 0x40, 0x10 });
-
         float* wirebug = ReadMultiLevelPointer<float>(hProcess, (void*)0x14BEF63E8, { 0x60, 0x20, 0x3B0, 0x28, 0x10 });
         ReadProcessMemory(hProcess, (void*)wirebug, &val, sizeof(val), 0);
 

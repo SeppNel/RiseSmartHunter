@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     if (!QFile("config.ini").exists()) {
         QSettings settings("config.ini", QSettings::IniFormat);
         settings.setValue("multipleWindows", 0);
-        settings.setValue("fontColor", "red");
+        settings.setValue("fontColor", "white");
         settings.setValue("fontSize", 20);
         settings.setValue("flyMode", 0);
     }
