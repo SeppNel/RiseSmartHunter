@@ -1,10 +1,10 @@
 #include "mainwindow.h"
+#include "workers.h"
 #include <QApplication>
 #include <QThread>
 #include <QScreen>
 #include <QSettings>
 #include <QFile>
-//#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
     QSize screenSize = a.primaryScreen()->size();
 
     // Create config file if not present
-
     if (!QFile("config.ini").exists()) {
         QSettings settings("config.ini", QSettings::IniFormat);
         settings.setValue("multipleWindows", 0);
@@ -22,7 +21,6 @@ int main(int argc, char *argv[])
     }
 
     // Read config file
-
     QSettings settings("config.ini", QSettings::IniFormat);
     int multiWindows = settings.value("multipleWindows").toInt();
     QString fontColor = settings.value("fontColor").toString();
@@ -34,6 +32,9 @@ int main(int argc, char *argv[])
 // Damage Window
 
     MainWindow damageDisp;
+    Workers wDamage;
+
+    QObject::connect(&wDamage, SIGNAL(uiSignal(QString, QString)), &damageDisp, SLOT(updateUI(QString, QString)));
 
     damageDisp.setAttribute(Qt::WA_TranslucentBackground);
     damageDisp.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -43,8 +44,8 @@ int main(int argc, char *argv[])
     QString style = "QLabel { color: " + fontColor + "; font-size: " + fontSize + "pt; font-weight: bold }";
     damageDisp.setStyleSheet(style);
 
-    QThread *thread = QThread::create([&damageDisp]{
-            damageDisp.get_damage();
+    QThread *thread = QThread::create([&wDamage]{
+            wDamage.get_damage();
     });
     thread->start();
 
@@ -53,6 +54,9 @@ int main(int argc, char *argv[])
 // HP Window
 
     MainWindow hpDisp;
+    Workers wHP;
+
+    QObject::connect(&wHP, SIGNAL(uiSignal(QString, QString)), &hpDisp, SLOT(updateUI(QString, QString)));
 
     if (!multiWindows){
         hpDisp.setParent(&damageDisp);
@@ -61,8 +65,8 @@ int main(int argc, char *argv[])
     hpDisp.setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     hpDisp.move((screenSize.width() - hpDisp.width()) / 2, 5);
 
-    QThread *thread2 = QThread::create([&hpDisp]{
-            hpDisp.get_hp();
+    QThread *thread2 = QThread::create([&wHP]{
+            wHP.get_hp();
     });
     thread2->start();
 

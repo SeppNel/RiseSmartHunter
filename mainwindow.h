@@ -8,7 +8,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-void fly_mode();
 
 class MainWindow : public QMainWindow
 {
@@ -22,14 +21,9 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     int m_nMouseClick_X_Coordinate = 0;
     int m_nMouseClick_Y_Coordinate = 0;
-    void get_damage();
-    void get_hp();
 
 public slots:
     void updateUI(QString, QString);
-
-signals:
-    void uiSignal(QString, QString);
 
 private:
     Ui::MainWindow *ui;
