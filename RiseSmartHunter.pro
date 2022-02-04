@@ -20,13 +20,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
-    workers.cpp
+    mainwindow.cpp \
+    workers.cpp \
     helpers.cpp
 
 HEADERS += \
-    mainwindow.h
-    workers.h
+    mainwindow.h \
+    workers.h \
     helpers.h
 
 FORMS += \
