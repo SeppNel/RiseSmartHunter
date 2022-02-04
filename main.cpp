@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
         settings.setValue("multipleWindows", 0);
         settings.setValue("fontColor", "white");
         settings.setValue("fontSize", 20);
-        settings.setValue("flyMode", 0);
     }
 
     // Read config file
@@ -25,11 +24,9 @@ int main(int argc, char *argv[])
     int multiWindows = settings.value("multipleWindows").toInt();
     QString fontColor = settings.value("fontColor").toString();
     QString fontSize = settings.value("fontSize").toString();
-    int flyMode = settings.value("flyMode").toInt();
 
 
-
-// Damage Window
+    // Damage Window
 
     MainWindow damageDisp;
     Workers wDamage;
@@ -51,7 +48,7 @@ int main(int argc, char *argv[])
 
     damageDisp.show();
 
-// HP Window
+    // HP Window
 
     MainWindow hpDisp;
     Workers wHP;
@@ -68,18 +65,10 @@ int main(int argc, char *argv[])
     QThread *thread2 = QThread::create([&wHP]{
             wHP.get_hp();
     });
-    thread2->start();
+     thread2->start();
 
-    hpDisp.show();
+     hpDisp.show();
 
-// Fly Mode
-
-    if (flyMode){
-        QThread *thread3 = QThread::create([]{
-                fly_mode();
-        });
-        thread3->start();
-    }
 
     return a.exec();
 }

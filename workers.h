@@ -1,8 +1,6 @@
 #pragma once
 #include <QObject>
 
-void fly_mode();
-
 class Workers : public QObject {
     Q_OBJECT
 
