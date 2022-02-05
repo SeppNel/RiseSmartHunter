@@ -42,6 +42,7 @@ union Char_to_Float
     float real;
 };
 
+//Decoding algorithm taken from HunterPie (https://github.com/Haato3o/HunterPie-v2)
 float decodeHealth(unsigned int value, unsigned int key) {
     char decoded[4];
     unsigned int edx, eax, ecx, r8d;
