@@ -45,11 +45,11 @@ void Workers::get_hp()
 
     while (true)
     {
-        float* maxHP_p = ReadMultiLevelPointer<float>(hProcess, (void*)0x1487F6BE4, { 0x1C0, 0x2A0, 0x178 });
+        float* maxHP_p = ReadMultiLevelPointer<float>(hProcess, (void*)0x14C01EBC0, { 0x80, 0x40, 0x2A0, 0x178 });
         bool readHP = ReadProcessMemory(hProcess, (void*)maxHP_p, &maxHP, 4, 0);
 
         //uint* EncodedPtr = ReadMultiLevelPointer<uint>(hProcess, (void*)0x14C01EBC0, { 0x80, 0x10, 0x20, 0x2A0, 0x48, 0x10, 0x20, 0x10, 0x20, 0x10, 0x18 });
-        uint* EncodedPtr = ReadMultiLevelPointer<uint>(hProcess, (void*)0x1487F6BE4, { 0x1C0, 0x2A0, 0x198 });
+        uint* EncodedPtr = ReadMultiLevelPointer<uint>(hProcess, (void*)0x14C01EBC0, { 0x80, 0x40, 0x2A0, 0x198 });
 
         uint* mod = ReadMultiLevelPointer<uint>(hProcess, (void*)EncodedPtr, { 0x18 });
         ReadProcessMemory(hProcess, (void*)mod, &healthEncodedMod, 4, 0);
